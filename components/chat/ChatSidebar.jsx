@@ -1,80 +1,83 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
+const demoChats = [
+  {
+    id: "demo-user-1",
+    name: "Dr Sarah Johnson",
+    role: "Senior Cardiologist",
+    avatar: "https://i.pravatar.cc/150?img=1",
+    online: true,
+    lastMessage: "Hello, how can I help you?",
+  },
+  {
+    id: "demo-user-2",
+    name: "Dr David Wilson",
+    role: "Recruiter",
+    avatar: "https://i.pravatar.cc/150?img=2",
+    online: false,
+    lastMessage: "Please share your resume.",
+  },
+  {
+    id: "demo-user-3",
+    name: "Dr Emily Brown",
+    role: "HR Manager",
+    avatar: "https://i.pravatar.cc/150?img=3",
+    online: true,
+    lastMessage: "Interview scheduled tomorrow.",
+  },
+];
 
-export default function ChatSidebar({ selectedUser, setSelectedUser }) {
-  const [users, setUsers] = useState([]);
-
-  const fetchUsers = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/users`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setUsers(res.data.data);
-    } catch (error) {
-      console.error("Fetch users error:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
+export default function ChatSidebar({ selectedChat, setSelectedChat }) {
   return (
-    <div className="w-full md:w-80 border-r border-slate-700 bg-slate-900">
-      <div className="p-5 border-b border-slate-700">
-        <h2 className="text-xl font-bold text-white">Messages</h2>
+    <div className="w-96 bg-slate-900 border-r border-slate-800 hidden md:flex flex-col">
+      <div className="p-5 border-b border-slate-800">
+        <h1 className="text-2xl font-bold text-white">ChatzKeep</h1>
+        <p className="text-slate-400 text-sm">Messages</p>
       </div>
 
-      <div className="p-4 border-b border-slate-700">
+      <div className="p-4">
         <input
           type="text"
-          placeholder="Search users..."
-          className="w-full bg-slate-800 text-white rounded-xl px-4 py-3 outline-none"
+          placeholder="Search conversations..."
+          className="w-full bg-slate-800 text-white px-4 py-3 rounded-xl outline-none placeholder-slate-400"
         />
       </div>
 
-      {users.map((user) => (
-        <div
-          key={user._id}
-          onClick={() => setSelectedUser(user)}
-          className={`p-4 cursor-pointer border-b border-slate-800 transition ${
-            selectedUser?._id === user._id
-              ? "bg-slate-800"
-              : "hover:bg-slate-800"
-          }`}
-        >
-          <div className="flex items-center gap-3">
-            <img
-              src={
-                user.profileImage ||
-                "https://i.pravatar.cc/150?img=12"
-              }
-              alt={user.fullName}
-              className="w-12 h-12 rounded-full object-cover"
-            />
+      <div className="flex-1 overflow-y-auto">
+        {demoChats.map((chat) => (
+          <div
+            key={chat.id}
+            onClick={() => setSelectedChat(chat)}
+            className={`p-4 cursor-pointer border-b border-slate-800 transition ${
+              selectedChat?.id === chat.id
+                ? "bg-cyan-500/20"
+                : "hover:bg-slate-800"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <img
+                  src={chat.avatar}
+                  alt={chat.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                {chat.online && (
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-900" />
+                )}
+              </div>
 
-            <div>
-              <h3 className="text-white font-medium">
-                {user.fullName}
-              </h3>
+              <div className="flex-1">
+                <h3 className="text-white font-semibold">{chat.name}</h3>
+                <p className="text-slate-400 text-sm truncate">
+                  {chat.lastMessage}
+                </p>
+              </div>
 
-              <p className="text-slate-400 text-sm">
-                {user.role}
-              </p>
+              <span className="text-xs text-slate-500">Now</span>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

@@ -3,21 +3,24 @@
 import { useState } from "react";
 import ChatSidebar from "../../components/chat/ChatSidebar";
 import ChatWindow from "../../components/chat/ChatWindow";
-import NotificationPanel from "../../components/chat/NotificationPanel";
 
 export default function ChatPage() {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedChat, setSelectedChat] = useState({
+    id: "demo-user-1",
+    name: "Dr Sarah Johnson",
+    role: "Senior Cardiologist",
+    avatar: "https://i.pravatar.cc/150?img=1",
+    online: true,
+  });
 
   return (
-    <div className="h-screen flex flex-col md:flex-row bg-slate-950">
+    <div className="h-screen bg-slate-950 flex overflow-hidden">
       <ChatSidebar
-        selectedUser={selectedUser}
-        setSelectedUser={setSelectedUser}
+        selectedChat={selectedChat}
+        setSelectedChat={setSelectedChat}
       />
 
-      <ChatWindow receiverId={selectedUser?._id} />
-
-      <NotificationPanel />
+      <ChatWindow selectedChat={selectedChat} />
     </div>
   );
 }
