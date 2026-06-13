@@ -1,6 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function ProfilePage() {
+  const router = useRouter();
   return (
     <div className="min-h-screen profile-bg py-10 px-4">
       <div className="max-w-6xl mx-auto">
@@ -49,15 +52,14 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <div className="flex gap-3">
-                <button className="profile-btn">
-                  Edit Profile
-                </button>
-
-                <button className="resume-btn">
-                  Upload Resume
-                </button>
-              </div>
+             <div className="flex gap-3">
+  <button
+    onClick={() => router.push("/chat")}
+    className="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-xl font-semibold transition shadow-lg"
+  >
+    💬 Open Chat
+  </button>
+</div>
             </div>
 
             {/* Stats */}
