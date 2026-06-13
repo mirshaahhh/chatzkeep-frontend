@@ -10,19 +10,20 @@ export default function MessageInput({ receiverId, refreshMessages }) {
 
   const sendMessage = async () => {
     if (!message.trim()) return;
+    if (!receiverId) {
+      alert("Please select a user first");
+      return;
+    }
 
     try {
       const token = localStorage.getItem("token");
 
-      const newMsg = {
-        receiver: receiverId,
-        text: message,
-      };
-
-      // 1. Save to DB
-      await axios.post(
-        "http://localhost:5000/api/chat/send",
-        newMsg,
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/chat/send`,
+        {
+          receiver: receiverId,
+          text: message,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -30,29 +31,32 @@ export default function MessageInput({ receiverId, refreshMessages }) {
         }
       );
 
-      // 2. REAL-TIME EMIT (IMPORTANT)
-      socket.emit("sendMessage", newMsg);
+      socket.emit("sendMessage", res.data.data);
 
       setMessage("");
 
       if (refreshMessages) refreshMessages();
     } catch (error) {
-      console.error(error);
+      console.error("Send message error:", error);
+      alert(error.response?.data?.message || "Message send failed");
     }
   };
 
   return (
-    <div className="flex gap-3 p-4">
+    <div className="flex gap-3 p-4 border-t border-slate-800">
       <input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="flex-1 bg-slate-800 text-white rounded-xl px-4 py-3"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") sendMessage();
+        }}
+        className="flex-1 bg-slate-800 text-white rounded-xl px-4 py-3 outline-none"
         placeholder="Type message..."
       />
 
       <button
         onClick={sendMessage}
-        className="bg-cyan-500 p-4 rounded-xl text-white"
+        className="bg-cyan-500 hover:bg-cyan-600 p-4 rounded-xl text-white"
       >
         <IoSend />
       </button>
