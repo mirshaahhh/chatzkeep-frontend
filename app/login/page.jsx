@@ -32,109 +32,121 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-950">
-      <div className="hidden lg:flex w-1/2 relative overflow-hidden">
+    <div className="min-h-screen flex bg-slate-950 overflow-hidden">
+      {/* Left Side */}
+      <div className="hidden lg:flex w-1/2 relative">
         <img
-          src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2000"
+          src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?q=80&w=2000"
           alt="Hospital"
-          className="w-full h-full object-cover scale-110 hover:scale-125 transition duration-[4000ms]"
+          className="w-full h-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-950/80 to-blue-950/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/50 to-transparent"></div>
 
-        <div className="absolute bottom-12 left-10 text-white max-w-md">
-          <h1 className="text-5xl font-bold mb-4">
-            Welcome to ChatzKeep
+        <div className="absolute bottom-16 left-12 max-w-lg">
+          <h1 className="text-6xl font-black text-white leading-tight">
+            ChatzKeep
           </h1>
 
-          <p className="text-lg text-slate-200">
-            Connect healthcare professionals, recruiters and candidates on one
-            secure platform.
+          <p className="text-slate-300 text-xl mt-4">
+            Connect healthcare professionals,
+            recruiters and candidates in one
+            powerful platform.
           </p>
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-950 via-slate-950 to-blue-950"></div>
+      {/* Right Side */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative">
 
+        {/* Background Glow */}
+        <div className="absolute w-[500px] h-[500px] bg-cyan-500/20 blur-[120px] rounded-full"></div>
+
+        {/* Card */}
         <div className="relative w-full max-w-md">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 blur-xl opacity-30 animate-pulse"></div>
 
-          <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white floating-card">
+          <div className="absolute -inset-1 rounded-[34px] bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 blur opacity-40 animate-pulse"></div>
+
+          <div className="relative bg-slate-900/70 backdrop-blur-2xl rounded-[32px] border border-white/10 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.4)]">
+
+            {/* Logo */}
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-extrabold text-cyan-700">
+
+              <div className="w-20 h-20 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-3xl">
+                🏥
+              </div>
+
+              <h1 className="text-4xl font-black text-white">
                 ChatzKeep
               </h1>
 
-              <p className="text-gray-500 mt-2">
+              <p className="text-slate-400 mt-2">
                 Healthcare Recruitment Platform
               </p>
+
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div>
-                <label className="block mb-2 text-gray-700 font-medium">
-                  Email Address
-                </label>
+            {/* Form */}
+            <form
+              onSubmit={handleLogin}
+              className="space-y-4"
+            >
 
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                  required
-                />
-              </div>
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+                className="w-full h-14 px-5 rounded-2xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition"
+              />
 
-              <div>
-                <label className="block mb-2 text-gray-700 font-medium">
-                  Password
-                </label>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+                className="w-full h-14 px-5 rounded-2xl bg-slate-800/80 border border-slate-700 text-white placeholder-slate-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none transition"
+              />
 
-                <input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                  required
-                />
-              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">
+                  Remember me
+                </span>
 
-              <div className="flex justify-between items-center text-sm">
-                <label className="flex items-center gap-2 text-gray-600">
-                  <input type="checkbox" />
-                  Remember Me
-                </label>
-
-                <button
-                  type="button"
-                  className="text-cyan-600 hover:underline font-medium"
-                >
+                <span className="text-cyan-400 cursor-pointer">
                   Forgot Password?
-                </button>
+                </span>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl text-white font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-105 transition-all duration-300 shadow-lg shadow-cyan-300"
+                className="w-full h-14 rounded-2xl font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-[1.02] transition-all duration-300"
               >
                 Sign In
               </button>
+
             </form>
 
-            <div className="mt-6 text-center text-gray-600">
-              Don&apos;t have an account?{" "}
+            <p className="text-center text-slate-400 mt-6">
+              Don't have an account?{" "}
               <span
-                onClick={() => router.push("/register")}
-                className="text-cyan-600 cursor-pointer hover:underline font-semibold"
+                onClick={() =>
+                  router.push("/register")
+                }
+                className="text-cyan-400 cursor-pointer hover:text-cyan-300"
               >
                 Register
               </span>
-            </div>
+            </p>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );
