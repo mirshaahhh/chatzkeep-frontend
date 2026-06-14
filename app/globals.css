@@ -394,3 +394,20 @@ body {
   background: rgba(255,255,255,.08);
   color: white;
 }
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-card {
+  animation: floating 5s ease-in-out infinite;
+}
